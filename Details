@@ -1,0 +1,67 @@
+Pneumonia Detection by X-ray Images
+
+Overview
+This project implements a deep learning model for detecting pneumonia from chest X-ray images. The model is based on InceptionV3, a pre-trained convolutional neural network (CNN). The dataset is divided into training, validation, and testing sets, and the model is fine-tuned to classify images as either NORMAL or PNEUMONIA.
+
+Dataset
+The dataset used in this project is Chest X-Ray Images (Pneumonia) from Kaggle: https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia
+dataset/
+│── train/
+│   ├── NORMAL/
+│   ├── PNEUMONIA/
+│── val/
+│   ├── NORMAL/
+│   ├── PNEUMONIA/
+│── test/
+│   ├── NORMAL/
+│   ├── PNEUMONIA/
+
+Model Architecture
+The model uses InceptionV3 with pre-trained ImageNet weights. The first 100 layers are frozen to retain learned features, while additional layers are added for classification:
+•	GlobalAveragePooling2D
+•	Dense (512 neurons, ReLU activation)
+•	Dropout (0.5 probability)
+•	Dense (1 neuron, Sigmoid activation)
+Data Preprocessing & Augmentation
+•	Training images: Rescaled to (150x150), normalized, and augmented (rotation, shifts, shear, zoom, and flips).
+•	Validation & Test images: Only rescaled and normalized.
+
+Training
+•	Optimizer: Adam with learning rate 0.0001
+•	Loss Function: Binary Cross-Entropy
+•	Metrics: Accuracy
+•	Callbacks:
+o	ModelCheckpoint: Saves the best model based on validation accuracy.
+o	EarlyStopping: Stops training if validation loss does not improve for 5 epochs.
+The model is trained for 5 epochs.
+  
+Evaluation
+•	The model is evaluated on the test set.
+•	A confusion matrix and classification report (precision, recall, F1-score) are generated.
+
+Predictions
+A function predict_pneumonia(img_path, model) is implemented to:
+•	Load an image and preprocess it.
+•	Make a prediction.
+•	Display the image with a label (NORMAL or PNEUMONIA) using OpenCV.
+
+Results
+•	Test accuracy is displayed after evaluation.
+•	Confusion matrix visualized with Seaborn.
+
+Example Usage
+To test an image:
+predict_pneumonia("C:/Users/Ayush/Desktop/STENDEC/person9_bacteria_40.jpeg", model)
+Dependencies
+•	TensorFlow
+•	NumPy
+•	OpenCV
+•	Matplotlib
+•	Seaborn
+•	Scikit-learn
+
+Future Improvements
+•	Increase dataset size for better generalization.
+•	Fine-tune additional layers.
+•	Experiment with different architectures (e.g., EfficientNet).
+________________________________________
